@@ -11,8 +11,6 @@ import java.util.Optional;
 @Service
 public class TeacherServiceImpl implements TeacherService {
 
-
-
     TeacherRepository teacherRepository;
 
 
@@ -22,7 +20,19 @@ public class TeacherServiceImpl implements TeacherService {
     }
 
 
-    @Override public List<Optional<Teacher>> getTeacherById(int id) {
+    @Override
+    public List<Optional<Teacher>> getTeacherById(int id) {
         return teacherRepository.selectTeacherById(id);
+    }
+
+
+    @Override
+    public void storeTeacher(Teacher teacher) {
+        teacherRepository.storeTeacher(teacher);
+    }
+
+    @Override
+    public List<Teacher> getTeacherByName(String name) {
+       return teacherRepository.selectTeacherByName(name);
     }
 }

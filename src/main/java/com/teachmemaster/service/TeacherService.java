@@ -7,5 +7,9 @@ import java.util.Optional;
 
 
 public interface TeacherService {
-    public List<Optional<Teacher>> getTeacherById(int id);
+     List<Optional<Teacher>> getTeacherById(int id);
+
+     List<Teacher> getTeacherByName(String name);
+
+     void storeTeacher(Teacher teacher);
 }

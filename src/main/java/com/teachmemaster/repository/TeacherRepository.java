@@ -8,4 +8,8 @@ import java.util.Optional;
 public interface TeacherRepository {
 
     List<Optional<Teacher>> selectTeacherById(int id);
+
+    void storeTeacher(Teacher teacher);
+
+    List<Teacher> selectTeacherByName(String name);
 }
