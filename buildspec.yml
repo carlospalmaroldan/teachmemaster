@@ -17,7 +17,7 @@ phases:
 
 artifacts:
   files:
-    - target/teachmemaster-1.0.jar
+    - '/root/.m2/**/*'
     name: teachmemaster-1.0.jar
   discard-paths: yes
 
