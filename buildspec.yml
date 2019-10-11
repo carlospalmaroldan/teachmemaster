@@ -17,7 +17,7 @@ phases:
 
 artifacts:
   files:
-    - target/teachmemaster-0.0.1-SNAPSHOT.jar
+    - target/teachmemaster--SNAPSHOT.jar
 
 cache:
   paths:
