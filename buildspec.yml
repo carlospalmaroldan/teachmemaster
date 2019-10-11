@@ -15,11 +15,7 @@ phases:
 
       - mvn install
 
-artifacts:
-  files:
-    - '/root/.m2/**/*'
-    name: teachmemaster-1.0.jar
-  discard-paths: yes
+
 
 cache:
   paths:
