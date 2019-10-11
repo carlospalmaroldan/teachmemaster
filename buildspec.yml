@@ -17,7 +17,7 @@ phases:
 
 artifacts:
   files:
-    - target/teachmemaster-1.0.jar
+    - teachmemasterbucket/teachmemaster-1.0.jar
 
 cache:
   paths:
