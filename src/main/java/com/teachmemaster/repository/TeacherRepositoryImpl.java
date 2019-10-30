@@ -1,5 +1,6 @@
 package com.teachmemaster.repository;
 
+import com.teachmemaster.domain.Student;
 import com.teachmemaster.domain.Teacher;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Component;
@@ -17,7 +18,15 @@ public class TeacherRepositoryImpl implements TeacherRepository{
 
     private static String SELECT_TEACHER_BY_NAME="select * from TEACHERS WHERE name = ?";
 
-    private static String INSERT_TEACHER = "insert into TEACHERS(name,create_date,student_id) VALUES (?,?,?)";
+    private static String INSERT_TEACHER = "insert into TEACHERS(name,create_date) VALUES (?,?)";
+
+    private static String GET_STUDENTS_BY_TEACHER_ID = "select s.create_date,s.name "
+        + "from students s inner join teachers_students ts "
+        + "ON s.student_id = ts.student_id "
+        + "INNER JOIN teachers t "
+        + "ON t.teacher_id = ts.teacher_id "
+        + "WHERE t.teacher_id = ?";
+
 
     public TeacherRepositoryImpl(JdbcTemplate jdbcTemplate){
         this.jdbcTemplate=jdbcTemplate;
@@ -32,11 +41,16 @@ public class TeacherRepositoryImpl implements TeacherRepository{
     }
 
     @Override public void storeTeacher(Teacher teacher) {
-        jdbcTemplate.update(INSERT_TEACHER,teacher.getName(), Instant.now(),null);
+        jdbcTemplate.update(INSERT_TEACHER,teacher.getName(), Instant.now());
     }
 
     @Override public List<Teacher> selectTeacherByName(String name) {
        return jdbcTemplate.query(SELECT_TEACHER_BY_NAME,new Object[]{name}, new TeacherRowMapper());
+    }
+
+    @Override
+    public List<Student> getStudentsByTeacherId(int teacherId){
+        return jdbcTemplate.query(GET_STUDENTS_BY_TEACHER_ID,new Object[]{teacherId},new StudentRowMapper());
     }
 
 }

@@ -20,7 +20,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @RunWith(SpringRunner.class)
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @AutoConfigureMockMvc
-public class TeacherWebServiceImplImplFT {
+public class TeacherWebServiceImplFT {
 
     @Autowired
     private MockMvc mockMvc;
@@ -47,6 +47,12 @@ public class TeacherWebServiceImplImplFT {
         ).andExpect(status().isOk());
 
         this.mockMvc.perform(get("/teacher?name=carlos"))
+            .andExpect(status().isOk());
+    }
+
+    @Test
+    public void shouldReturnListOfStudentsOfTeacher() throws Exception{
+        this.mockMvc.perform( get("/studentsbyteacherid?teacherId=1"))
             .andExpect(status().isOk());
     }
 }

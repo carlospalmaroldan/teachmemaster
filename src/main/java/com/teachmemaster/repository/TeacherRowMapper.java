@@ -14,7 +14,6 @@ public class TeacherRowMapper implements RowMapper<Teacher> {
            .createDate(resultSet.getTimestamp("create_date").toInstant())
            .updateDate(resultSet.getTimestamp("update_date").toInstant())
            .name(resultSet.getString("name"))
-           .studentId(resultSet.getLong("student_id"))
            .build();
     }
 }

@@ -1,5 +1,6 @@
 package com.teachmemaster.webservice;
 
+import com.teachmemaster.domain.Student;
 import com.teachmemaster.domain.Teacher;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -49,5 +50,12 @@ public class TeacherWebServiceImpl {
         List<Teacher> list = teacherService.getTeacherByName(name);
         return list.stream().collect(Collectors.toSet());
     }
+
+    @GetMapping(value="/studentsbyteacherid", params="teacherId")
+    public Set<Student> getStudentsByTeacherId(@RequestParam(value="teacherId") int teacherId){
+        Set<Student> studentsOfTeacher = teacherService.getStudentsByTeacherId(teacherId);
+        return studentsOfTeacher;
+    }
+
 
 }
