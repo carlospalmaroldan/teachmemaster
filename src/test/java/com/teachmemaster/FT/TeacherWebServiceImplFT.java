@@ -55,4 +55,10 @@ public class TeacherWebServiceImplFT {
         this.mockMvc.perform( get("/studentsbyteacherid?teacherId=1"))
             .andExpect(status().isOk());
     }
+
+    @Test
+    public void shouldReturnListOfStudentsOfTeacherGivenTeacherName() throws Exception{
+        this.mockMvc.perform(get("/studentsbyTeacherName?teacherName=Anthony"))
+            .andExpect(status().isOk());
+    }
 }

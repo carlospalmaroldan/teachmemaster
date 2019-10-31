@@ -15,4 +15,6 @@ public interface TeacherService {
      void storeTeacher(Teacher teacher);
 
      Set<Student> getStudentsByTeacherId(int teacherId);
+
+     Set<Student> getStudentsByTeacherName(String teacherName);
 }

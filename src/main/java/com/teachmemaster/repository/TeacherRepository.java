@@ -15,5 +15,7 @@ public interface TeacherRepository {
 
     List<Teacher> selectTeacherByName(String name);
 
-    public List<Student> getStudentsByTeacherId(int teacherId);
+    List<Student> getStudentsByTeacherId(int teacherId);
+
+    List<Student> getStudentsByTeacherName(String teacherName);
 }

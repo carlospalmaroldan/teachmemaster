@@ -27,6 +27,13 @@ public class TeacherRepositoryImpl implements TeacherRepository{
         + "ON t.teacher_id = ts.teacher_id "
         + "WHERE t.teacher_id = ?";
 
+    private static String GET_STUDENTS_BY_TEACHER_NAME = "select s.create_date,s.name "
+        + "from students s inner join teachers_students ts "
+        + "ON s.student_id = ts.student_id "
+        + "INNER JOIN teachers t "
+        + "ON t.teacher_id = ts.teacher_id "
+        + "WHERE t.name= ?";
+
 
     public TeacherRepositoryImpl(JdbcTemplate jdbcTemplate){
         this.jdbcTemplate=jdbcTemplate;
@@ -51,6 +58,10 @@ public class TeacherRepositoryImpl implements TeacherRepository{
     @Override
     public List<Student> getStudentsByTeacherId(int teacherId){
         return jdbcTemplate.query(GET_STUDENTS_BY_TEACHER_ID,new Object[]{teacherId},new StudentRowMapper());
+    }
+
+    @Override public List<Student> getStudentsByTeacherName(String teacherName) {
+        return jdbcTemplate.query(GET_STUDENTS_BY_TEACHER_NAME,new Object[]{teacherName},new StudentRowMapper());
     }
 
 }

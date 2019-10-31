@@ -57,5 +57,11 @@ public class TeacherWebServiceImpl {
         return studentsOfTeacher;
     }
 
+    @GetMapping(value="/studentsbyTeacherName", params="teacherName")
+    public Set<Student> getStudentsByTeacherName(@RequestParam(value="teacherName") String teacherName){
+        Set<Student> studentsOfTeacher = teacherService.getStudentsByTeacherName(teacherName);
+        return studentsOfTeacher;
+    }
+
 
 }
