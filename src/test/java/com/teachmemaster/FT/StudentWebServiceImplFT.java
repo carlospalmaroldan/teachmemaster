@@ -14,6 +14,7 @@ import org.springframework.test.web.servlet.MockMvc;
 
 import java.time.Instant;
 
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -37,6 +38,10 @@ public class StudentWebServiceImplFT {
             .createDate(Instant.now())
             .build()))
             .contentType(MediaType.APPLICATION_JSON))
+            .andExpect(status().isOk());
+
+
+        mockMvc.perform(get("/student?id=1"))
             .andExpect(status().isOk());
     }
 }

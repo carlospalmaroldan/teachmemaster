@@ -5,6 +5,8 @@ import com.teachmemaster.repository.StudentRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import java.util.Optional;
+
 @Component
 public class StudentServiceImpl implements StudentService{
 
@@ -18,5 +20,10 @@ public class StudentServiceImpl implements StudentService{
     @Override
     public void storeStudent(Student student) {
         studentRepository.storeStudent(student);
+    }
+
+    @Override
+    public Optional<Student> getStudentById(int id) {
+        return studentRepository.getStudentById(id);
     }
 }
