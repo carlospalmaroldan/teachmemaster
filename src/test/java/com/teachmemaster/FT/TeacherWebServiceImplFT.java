@@ -37,7 +37,7 @@ public class TeacherWebServiceImplFT {
 
     @Test
     public void shouldInsertTeacher() throws Exception{
-        Teacher teacher=new Teacher();
+
         this.mockMvc.perform(post("/teacher")
             .content(objectMapper.writeValueAsString(Teacher.builder()
                 .name("carlos")

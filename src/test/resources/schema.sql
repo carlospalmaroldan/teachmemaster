@@ -8,12 +8,25 @@ CREATE TABLE `TEACHERS` (
 	PRIMARY KEY (`teacher_id`)
 );
 
+
+CREATE TABLE `APPOINTMENTS` (
+    `appointment_id` INT(11) NOT NULL AUTO_INCREMENT,
+    `teacher_id` INT(11) NOT NULL,
+    `start_date` TIMESTAMP NOT NULL,
+    `end_date` TIMESTAMP NOT NULL,
+    FOREIGN KEY (teacher_id) REFERENCES TEACHERS (teacher_id) ON DELETE RESTRICT ON UPDATE CASCADE,
+    PRIMARY KEY (`appointment_id`,`teacher_id`)
+);
+
 CREATE TABLE `STUDENTS` (
     `student_id` INT(11) NOT NULL AUTO_INCREMENT,
     `name` VARCHAR(255) NOT NULL,
     `create_date` TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    `appointment_id` INT(11) ,
+    FOREIGN KEY (appointment_id) REFERENCES APPOINTMENTS (appointment_id) ON DELETE RESTRICT ON UPDATE CASCADE,
     PRIMARY KEY (`student_id`)
 );
+
 
 
 CREATE TABLE `TEACHERS_STUDENTS`(
@@ -23,3 +36,6 @@ CREATE TABLE `TEACHERS_STUDENTS`(
     FOREIGN KEY (student_id) REFERENCES STUDENTS (student_id) ON DELETE RESTRICT ON UPDATE CASCADE,
     PRIMARY KEY (teacher_id, student_id)
 );
+
+
+
