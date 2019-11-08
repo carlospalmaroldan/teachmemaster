@@ -3,7 +3,7 @@ package com.teachmemaster.domain;
 import java.time.Instant;
 
 public class Student {
-
+    private Long studentId;
     private String name;
     private Instant createDate;
 
@@ -13,6 +13,7 @@ public class Student {
     public static class Builder{
         private  String name;
         private Instant createDate;
+        private Long studentId;
 
 
         public Builder name(String name){
@@ -25,16 +26,26 @@ public class Student {
             return this;
         }
 
+        public Builder studentId(Long studentId){
+            this.studentId=studentId;
+            return this;
+        }
+
         public  Student build(){
             Student  student= new Student();
             student.name=this.name;
             student.createDate=this.createDate;
+            student.studentId=this.studentId;
             return student;
         }
     }
 
     public String getName(){
         return this.name;
+    }
+
+    public Long getStudentId(){
+        return this.studentId;
     }
 
     public Instant getCreateDate(){

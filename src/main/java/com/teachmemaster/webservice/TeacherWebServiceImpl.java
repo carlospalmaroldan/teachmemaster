@@ -52,14 +52,13 @@ public class TeacherWebServiceImpl {
     }
 
     @GetMapping(value="/studentsbyteacherid", params="teacherId")
-    public Set<Student> getStudentsByTeacherId(@RequestParam(value="teacherId") int teacherId){
-        Set<Student> studentsOfTeacher = teacherService.getStudentsByTeacherId(teacherId);
-        return studentsOfTeacher;
+    public List<Student> getStudentsByTeacherId(@RequestParam(value="teacherId") int teacherId){
+        return teacherService.getStudentsByTeacherId(teacherId);
     }
 
     @GetMapping(value="/studentsbyTeacherName", params="teacherName")
-    public Set<Student> getStudentsByTeacherName(@RequestParam(value="teacherName") String teacherName){
-        Set<Student> studentsOfTeacher = teacherService.getStudentsByTeacherName(teacherName);
+    public List<Student> getStudentsByTeacherName(@RequestParam(value="teacherName") String teacherName){
+        List<Student> studentsOfTeacher = teacherService.getStudentsByTeacherName(teacherName);
         return studentsOfTeacher;
     }
 

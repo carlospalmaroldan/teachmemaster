@@ -39,11 +39,13 @@ public class TeacherServiceImpl implements TeacherService {
        return teacherRepository.selectTeacherByName(name);
     }
 
-    @Override public Set<Student> getStudentsByTeacherId(int teacherId) {
-        return teacherRepository.getStudentsByTeacherId(teacherId).stream().collect(Collectors.toSet());
+    @Override
+    public List<Student> getStudentsByTeacherId(int teacherId) {
+        return teacherRepository.getStudentsByTeacherId(teacherId);
     }
 
-    @Override public Set<Student> getStudentsByTeacherName(String teacherName) {
-        return teacherRepository.getStudentsByTeacherName(teacherName).stream().collect(Collectors.toSet());
+    @Override
+    public List<Student> getStudentsByTeacherName(String teacherName) {
+        return teacherRepository.getStudentsByTeacherName(teacherName);
     }
 }

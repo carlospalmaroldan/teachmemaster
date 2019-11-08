@@ -13,8 +13,8 @@ public class StudentRepositoryImpl implements StudentRepository {
 
     JdbcTemplate jdbcTemplate;
 
-    private static final String INSERT_STUDENT="insert into STUDENTS(name,create_date,appointment_id)"
-        + "VALUES(?,?,?)";
+    private static final String INSERT_STUDENT="insert into STUDENTS(name,create_date)"
+        + "VALUES(?,?)";
 
     private static final String GET_STUDENT_BY_ID="select * from STUDENTS where student_id = ?";
 
@@ -24,15 +24,17 @@ public class StudentRepositoryImpl implements StudentRepository {
     }
 
     public void storeStudent(Student student){
-        jdbcTemplate.update(INSERT_STUDENT,student.getName(),student.getCreateDate(),null);
+        jdbcTemplate.update(INSERT_STUDENT,student.getName(),student.getCreateDate());
     }
 
     public Optional<Student> getStudentById(int id){
         List<Student> studentList=new ArrayList<>();
         jdbcTemplate.query(GET_STUDENT_BY_ID,new Object[] { id },rs->{
             while(rs.next()){
-            studentList.add( Student.builder().name(rs.getString("name"))
+            studentList.add( Student.builder()
+                .name(rs.getString("name"))
                 .createDate(rs.getTimestamp("create_date").toInstant())
+                .studentId(rs.getLong("student_id"))
                 .build());
             }
             return studentList;

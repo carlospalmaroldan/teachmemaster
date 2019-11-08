@@ -22,12 +22,13 @@ public class StudentWebServiceImpl {
     }
 
     @PostMapping("/student")
-    public void storeTeacher(@RequestBody Student student){
+    public void storeStudent(@RequestBody Student student){
         studentService.storeStudent(student);
     }
 
     @GetMapping("/student")
     public Optional<Student> getStudentById(@RequestParam(value="id") Integer id){
-       return studentService.getStudentById(id);
+        Optional<Student> student =  studentService.getStudentById(id);
+        return student;
     }
 }

@@ -13,9 +13,12 @@ import org.springframework.test.web.servlet.MockMvc;
 
 import java.time.Instant;
 
+import static org.hamcrest.Matchers.hasSize;
+import static org.hamcrest.Matchers.is;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
@@ -53,12 +56,18 @@ public class TeacherWebServiceImplFT {
     @Test
     public void shouldReturnListOfStudentsOfTeacher() throws Exception{
         this.mockMvc.perform( get("/studentsbyteacherid?teacherId=1"))
+            .andExpect(jsonPath("$",hasSize(2)))
+            .andExpect(jsonPath("$[0].name",is("student1")))
+            .andExpect(jsonPath("$[1].name",is("student2")))
             .andExpect(status().isOk());
     }
 
     @Test
     public void shouldReturnListOfStudentsOfTeacherGivenTeacherName() throws Exception{
         this.mockMvc.perform(get("/studentsbyTeacherName?teacherName=Anthony"))
+            .andExpect(jsonPath("$",hasSize(2)))
+            .andExpect(jsonPath("$[0].name",is("student1")))
+            .andExpect(jsonPath("$[1].name",is("student2")))
             .andExpect(status().isOk());
     }
 }

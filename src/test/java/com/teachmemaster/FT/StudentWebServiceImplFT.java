@@ -2,7 +2,6 @@ package com.teachmemaster.FT;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.teachmemaster.domain.Student;
-import com.teachmemaster.domain.Teacher;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,8 +13,10 @@ import org.springframework.test.web.servlet.MockMvc;
 
 import java.time.Instant;
 
+import static org.hamcrest.Matchers.is;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 
@@ -40,8 +41,13 @@ public class StudentWebServiceImplFT {
             .contentType(MediaType.APPLICATION_JSON))
             .andExpect(status().isOk());
 
+    }
 
+    @Test
+    public void shouldGetStudent() throws Exception{
         mockMvc.perform(get("/student?id=1"))
+            .andExpect(jsonPath("$.name",is("student1")))
+            .andExpect(jsonPath("$.studentId",is(1)))
             .andExpect(status().isOk());
     }
 }
