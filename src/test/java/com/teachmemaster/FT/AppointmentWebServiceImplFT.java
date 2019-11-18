@@ -29,17 +29,16 @@ public class AppointmentWebServiceImplFT {
 
     @Test
     public void shouldRetrieveAppointmentsByTeacherIdAndTime() throws Exception{
-       /* this.mockMvc.perform(get("/appointments-by-teacher-and-date?startTime=2019-10-11 12:30:00Z&&endTime=2019-10-11 13:30:00Z&&teacherId=1"))
-            .andExpect(jsonPath("$.name",is(1)))
-            .andExpect(status().isOk());*/
+        this.mockMvc.perform(get("/appointments-by-teacher-and-date?startTime=2019-10-11 15:30:30" +
+                "&&endTime=2019-10-11 16:30:01&&teacherId=1"))
+            .andExpect(jsonPath("$[0].teacher.teacherId",is(1)))
+            .andExpect(jsonPath("$[0].teacher.name",is("Anthony")))
+            .andExpect(jsonPath("$[0].startTime",is("2019-10-11T15:00:00Z")))
+            .andExpect(jsonPath("$[0].endTime",is("2019-10-11T16:00:00Z")))
+            .andExpect(status().isOk());
     }
 
 
 
 }
-/*
-    select appointment_id,teacher_id,start_time,end_time
-    FROM APPOINTMENTS
-    WHERE teacher_id = 1
-    AND ( start_time < '2019-10-11T12:30:00Z' AND  '2019-10-11T12:30:00Z' < end_time)
-    OR (start_time < '2019-10-11T13:30:00Z' AND  '2019-10-11T13:30:00Z' < end_time);*/
+
