@@ -2,16 +2,12 @@ package com.teachmemaster.webservice;
 
 import com.teachmemaster.DTO.AppointmentDto;
 import com.teachmemaster.domain.Appointment;
-import com.teachmemaster.domain.Teacher;
 import com.teachmemaster.service.AppointmentService;
-import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-
-import java.time.Instant;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
@@ -39,8 +35,7 @@ public class AppointmentWebServiceImpl {
         @RequestParam(value="endTime") String endTime,
         @RequestParam(value="teacherId") Long teacherId){
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
-       return  appointmentService.getAppointmentsByTeacherAtTimePeriod(LocalDateTime.parse(startTime,formatter),LocalDateTime.parse(endTime,formatter),teacherId)
-             .orElseGet(null);
+       return  appointmentService.getAppointmentsByTeacherAtTimePeriod(LocalDateTime.parse(startTime,formatter),LocalDateTime.parse(endTime,formatter),teacherId);
     }
 
     private Appointment mapAppointmentToAppointmentDto(AppointmentDto appointmentDto){

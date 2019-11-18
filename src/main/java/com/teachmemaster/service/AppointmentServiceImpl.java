@@ -3,12 +3,10 @@ package com.teachmemaster.service;
 import com.teachmemaster.domain.Appointment;
 import com.teachmemaster.repository.AppointmentRepository;
 import org.springframework.stereotype.Component;
-
-import java.time.Instant;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
+import java.time.ZoneId;
 import java.util.List;
-import java.util.Optional;
+
 
 @Component
 public class AppointmentServiceImpl implements AppointmentService{
@@ -23,21 +21,21 @@ public class AppointmentServiceImpl implements AppointmentService{
     @Override
     public void storeAppointment(Appointment appointment) {
 
-       /* getAppointmentsByTeacherAtTimePeriod(appointment.getStartTime(),appointment.getEndTime(),appointment.getTeacher().getName())
-        .map(list->{
-                throw new RuntimeException();
-            })
-            .orElseGet(
-            ()->
-                appointmentRepository.storeAppointment(appointment)
+       List<Appointment> appointmentList= getAppointmentsByTeacherAtTimePeriod(LocalDateTime.ofInstant(appointment.getStartTime(),ZoneId.of("UTC")),
+               LocalDateTime.ofInstant(appointment.getEndTime(), ZoneId.of("UTC")),
+               appointment.getTeacher().getTeacherId());
+       if(appointmentList.isEmpty()) {
+           appointmentRepository.storeAppointment(appointment);
+       }else{
+           throw new RuntimeException();
+       }
 
 
-        );*/
 
     }
 
     @Override
-    public Optional<List<Appointment>> getAppointmentsByTeacherAtTimePeriod(LocalDateTime start, LocalDateTime end, Long teacherId) {
+    public List<Appointment> getAppointmentsByTeacherAtTimePeriod(LocalDateTime start, LocalDateTime end, Long teacherId) {
       return  appointmentRepository.getAppointmentsByTeacherAndTime(start,end,teacherId);
     }
 

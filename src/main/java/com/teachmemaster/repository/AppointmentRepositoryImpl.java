@@ -11,7 +11,7 @@ import java.time.LocalDateTime;
 import java.time.ZoneOffset;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
+
 
 @Component
 public class AppointmentRepositoryImpl implements AppointmentRepository {
@@ -24,7 +24,7 @@ public class AppointmentRepositoryImpl implements AppointmentRepository {
         this.jdbcTemplate=jdbcTemplate;
     }
 
-    private static final String STORE_APPOINTMENT="insert into APPOINTMENTS(teacher_id,start_time,end_time) VALUES(:teacherId,:startTime,:endTime)";
+    private static final String STORE_APPOINTMENT="insert into APPOINTMENTS(teacher_id,start_time,end_time) VALUES(?,?,?)";
 
     private static final String GET_APPOINTMENTS_BY_TEACHER_AND_TIME="select a.appointment_id,a.teacher_id," +
             "a.start_time, a.end_time, t.name, t.update_date, t.create_date"
@@ -38,16 +38,13 @@ public class AppointmentRepositoryImpl implements AppointmentRepository {
 
     @Override
     public void storeAppointment(Appointment appointment) {
-        SqlParameterSource parameters = new MapSqlParameterSource()
-            .addValue("teacherId", appointment.getTeacher().getTeacherId())
-            .addValue("startTime", appointment.getStartTime())
-            .addValue("endTime", appointment.getEndTime());
+        //TODO should return the stored object in order to get its id and use it to verify in the FT
 
-        jdbcTemplate.update(STORE_APPOINTMENT,parameters);
+        jdbcTemplate.update(STORE_APPOINTMENT,appointment.getTeacher().getTeacherId(),appointment.getStartTime(),appointment.getEndTime());
     }
 
     @Override
-    public Optional<List<Appointment>> getAppointmentsByTeacherAndTime(LocalDateTime startTime, LocalDateTime endTime, Long teacherId){
+    public List<Appointment> getAppointmentsByTeacherAndTime(LocalDateTime startTime, LocalDateTime endTime, Long teacherId){
         List<Appointment> appointments = new ArrayList<>();
         SqlParameterSource parameters = new MapSqlParameterSource()
             .addValue("teacherId", teacherId)
@@ -68,7 +65,7 @@ public class AppointmentRepositoryImpl implements AppointmentRepository {
             }
             return appointments;
         });
-        return Optional.ofNullable(appointments);
+        return appointments;
     }
 
 }

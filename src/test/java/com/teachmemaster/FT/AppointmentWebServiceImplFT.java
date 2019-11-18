@@ -1,15 +1,22 @@
 package com.teachmemaster.FT;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.teachmemaster.DTO.AppointmentDto;
+import com.teachmemaster.domain.Teacher;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.http.MediaType;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 
+import java.time.Instant;
+
+import static java.time.temporal.ChronoUnit.HOURS;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.hamcrest.Matchers.is;
@@ -38,6 +45,16 @@ public class AppointmentWebServiceImplFT {
             .andExpect(status().isOk());
     }
 
+
+    @Test
+    public void shouldInsertAppointment() throws Exception{
+        this.mockMvc.perform(post("/appointment").content(objectMapper.writeValueAsString(AppointmentDto.builder()
+                .teacher(Teacher.builder().teacherId(1L).build())
+                .startTime(Instant.now())
+                .endTime(Instant.now().plus(1,HOURS))
+                .build())).contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk());
+    }
 
 
 }
